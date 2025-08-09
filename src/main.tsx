@@ -11,12 +11,8 @@ const router = createBrowserRouter([
   },
   {
     path: "/country",
-    element : <CountryInfo />
-  },
-  {
-    path: "/country/:countryName",
     element: <CountryInfo />
-  }
+  },
 ])
 
 createRoot(document.getElementById('root')!).render(

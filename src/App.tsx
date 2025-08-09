@@ -13,7 +13,8 @@ function App() {
   const [show , setShow] = useState<any>(false)
   const [input , setInput] = useState<any>("")
   const [data , setData] = useState<any>()
-
+  const navigate = useNavigate()
+  
   useEffect(() => {
     async function loadData() {
       try{
@@ -29,30 +30,36 @@ function App() {
   } , [])
 
   function countryName () {
-    if(data){
-      return data.map((item: { name: { common: string } }) => item.name.common.toLocaleLowerCase())
-    }
+   if(!data) return [];
+   return data.map((item: { name: { common: string } }) => item.name.common.toLocaleLowerCase())
   }
 
- const navigate = useNavigate()
- 
  function handleClick () {
-  if(countryName().includes(input.trim())){
-    const query = encodeURIComponent(input.trim().toLocaleLowerCase())
-    navigate(`/country?name=${query}`)
-  }else {
-    alert("Country not found")
-  }
+
+  setTimeout(() => {
+    const value = input.trim().toLocaleLowerCase()
+    const names = countryName()
+
+    console.log("✅ Clicked! value:", value)
+    console.log("🌍 All country names:", names)
+
+    if(names?.includes(value)){
+      const query = encodeURIComponent(value)
+      navigate(`/country?name=${query}`)
+    } else {
+      alert("Country not found")
+    }
+  }, 0)
+
  }
 
  function handleKeyDown (e: { key: string }) {
  if(e.key === 'Enter'){
   const nameList = countryName()
 
-  if(nameList.includes(input.trim().toLocaleLowerCase())){
+  if(nameList.includes(input.trim())){
     const query = encodeURIComponent(input.trim().toLocaleLowerCase())
     navigate(`/country?name=${query}` , {
-      state : data
     })
   }else {
     alert('Country not found')
