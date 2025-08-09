@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useEffect, useState, type JSXElementConstructor, type Key, type ReactElement, type ReactNode, type ReactPortal } from "react"
 import { useNavigate, useSearchParams } from "react-router-dom"
 import { Header } from "../components/Header"
 import { BackBtn } from "../components/BackBtn"
@@ -66,7 +66,7 @@ function borderCountries () {
     );
     if(!country || !country.borders) return [];
     
-    const borderNames = country.borders.map((borderCode) => {
+    const borderNames = country.borders.map((borderCode: any) => {
       console.log(borderCode)
         const borderCountry = borders.find((c) => c.cca3 === borderCode)
         return borderCountry ? borderCountry.name.common : borderCode
@@ -117,7 +117,7 @@ function borderCountries () {
               }
                />
                <div className="footer">
-                 {borderedCountries.map((item,index) => (
+                 {borderedCountries.map((item: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined,index: Key | null | undefined) => (
                   <button key={index}>{item}</button>
                  ))}
                </div>

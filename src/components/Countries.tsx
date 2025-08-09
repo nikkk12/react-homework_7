@@ -2,10 +2,26 @@ import { useEffect, useState } from "react"
 import { CountriesCard } from "./CountriesCard"
 import axios from "axios"
 
+interface Countries {
+  className ? : string
+}
 
-export const Countries = ({className}) => {
+interface Country {
+  name: {
+    common: string;
+  };
+  flags: {
+    svg: string;
+    alt: string;
+  };
+  population: string;
+  region: string;
+  capital: string;
+}
 
-  const [data , setData] = useState(null)  
+export const Countries = ({className} : Countries) => {
+
+  const [data , setData] = useState<Country[] | null> (null)  
 
   const selectedCountries = 
 [
@@ -19,11 +35,12 @@ export const Countries = ({className}) => {
     "Algeria"
 ]
   
- function getSelectedCountries () {
+ function getSelectedCountries () : Country[] {
     if(!data) return[];
     return selectedCountries.map(name => 
-        data.find(country => country.name.common === name)
+        data.find((country: { name: { common: string } }) => country.name.common === name )
     )
+    .filter((country): country is Country => country !== undefined)
  }
 
   useEffect(() => {

@@ -1,5 +1,4 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
+
 
 interface countryInfo {
     url ? : string
@@ -24,7 +23,6 @@ export const CountryInfoCompo = ({
     className,
     nativeName,
     subRegion,
-    borderCountries,
     topLevelDomain,
     currencies,
     languages,

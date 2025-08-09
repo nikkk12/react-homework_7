@@ -1,10 +1,10 @@
 interface SearchInput {
-    className? : string,
-    url? : string , 
-    mode? : () => void
-    onChange? : () => void
-    value? :  string
-    keyDown ? : () => void
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  keyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  value: string;
+  className?: string;
+  url?: string;
+  mode: () => void;
 }
 
 export const SearchInput = ({className,url,mode,onChange,value,keyDown}  : SearchInput) => {

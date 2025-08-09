@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useEffect, useState, type SetStateAction } from "react"
+import { useEffect, useState } from "react"
 import {  Header } from "./components/Header"
 import { SearchInput } from "./components/SearchInput"
 import search from './assets/search.svg'
@@ -9,10 +9,10 @@ import { useNavigate } from "react-router-dom"
 
 function App() {
 
-  const [darkMode , setDarkMode] = useState(false)
-  const [show , setShow] = useState(false)
-  const [input , setInput] = useState("")
-  const [data , setData] = useState()
+  const [darkMode , setDarkMode] = useState<any>(false)
+  const [show , setShow] = useState<any>(false)
+  const [input , setInput] = useState<any>("")
+  const [data , setData] = useState<any>()
 
   useEffect(() => {
     async function loadData() {
@@ -68,7 +68,7 @@ function App() {
        handleClick()
       }}
       keyDown={handleKeyDown}
-      onChange={(e: { target: { value: SetStateAction<string> } }) => {return setInput(e.target.value)}}
+      onChange={(e) => {return setInput(e.target.value)}}
       value={input}
       className="search-inp" url={search} />
       <FilterBtn 

@@ -1,6 +1,10 @@
+interface FilterBtn {
+  className ? : string
+  clased ? : string
+  onClick : () => void
+}
 
-
-export const FilterBtn = ({className , clased,onClick}) => {
+export const FilterBtn = ({className , clased,onClick} : FilterBtn) => {
   return (
     <div  className={className}>
         <button
