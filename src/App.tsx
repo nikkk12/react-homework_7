@@ -48,19 +48,18 @@ function App() {
     }
  }
 
- function handleKeyDown (e: { key: string }) {
- if(e.key === 'Enter'){
-  const nameList = countryName()
+ function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+  if (e.key === 'Enter') {
+    const value = input.trim().toLowerCase();
+    const names = countryName();
 
-  if(nameList.includes(input.trim())){
-    const query = encodeURIComponent(input.trim().toLocaleLowerCase())
-    navigate(`/country?name=${query}` , {
-    })
-  }else {
-    alert('Country not found')
+    if (names.includes(value)) {
+      navigate(`/country?name=${encodeURIComponent(value)}`);
+    } else {
+      alert('Country not found');
+    }
   }
- }
- }
+}
 
  function regionName(): string[] {
   if (!Array.isArray(data)) return [];
