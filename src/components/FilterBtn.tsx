@@ -1,31 +1,23 @@
+import type { ReactNode } from "react"
+
 interface FilterBtn {
   className ? : string
   clased ? : string
   onClick : () => void
+  children: ReactNode 
 }
 
-export const FilterBtn = ({className , clased,onClick} : FilterBtn) => {
+export const FilterBtn = ({className , clased,onClick,children} : FilterBtn) => {
+
+  
+
   return (
     <div  className={className}>
         <button
         onClick={onClick}
         type="button">Filter by Region</button>
-        <div className={clased}>
-            <span> 
-                <button type="button">Africa</button>
-            </span>
-            <span>
-          <button type="button">America</button>
-            </span>
-            <span>
-          <button type="button">Asia</button>
-            </span>
-            <span>
-          <button type="button">Europe</button>
-            </span>
-            <span>
-          <button type="button">Oceania</button>
-            </span>
+        <div className={clased}>{children}
+           
         </div> 
     </div>
   )

@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useEffect, useState} from "react"
 import {  Header } from "./components/Header"
 import { SearchInput } from "./components/SearchInput"
 import search from './assets/search.svg'
@@ -14,6 +14,7 @@ function App() {
   const [input , setInput] = useState<any>("")
   const [data , setData] = useState<any>()
   const navigate = useNavigate()
+  const [suggestions , Setsuggestions] = useState<string[]>([])
   
   useEffect(() => {
     async function loadData() {
@@ -36,12 +37,8 @@ function App() {
 
  function handleClick () {
 
-  setTimeout(() => {
     const value = input.trim().toLocaleLowerCase()
     const names = countryName()
-
-    console.log("✅ Clicked! value:", value)
-    console.log("🌍 All country names:", names)
 
     if(names?.includes(value)){
       const query = encodeURIComponent(value)
@@ -49,8 +46,6 @@ function App() {
     } else {
       alert("Country not found")
     }
-  }, 0)
-
  }
 
  function handleKeyDown (e: { key: string }) {
@@ -67,6 +62,42 @@ function App() {
  }
  }
 
+ function regionName(): string[] {
+  if (!Array.isArray(data)) return [];
+  
+  const regions = data
+    .map((item: { region?: string }) => item.region)
+    .filter((r): r is string => typeof r === 'string');
+
+  const unique = Array.from(new Set(regions));
+  unique.pop();
+  return unique.sort();
+}
+
+function filterByContinent(continent: any) {
+ navigate(`/continent?cont=${continent}` , {
+  state : data
+ })
+}
+
+function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+  const value = e.target.value;
+  setInput(value);
+
+  if (!value.trim()) {
+    Setsuggestions([]);
+    return;
+  }
+
+  const lowerValue = value.toLowerCase();
+
+  const matches = data
+    ?.map((item: { name: { common: string } }) => item.name.common)
+    .filter((name: string) => name.toLowerCase().startsWith(lowerValue)) ?? [];
+
+  Setsuggestions(matches);
+}
+
   return (
     <div className={darkMode  ? "wrapper" : "light"}>
       <Header mode={() => {setDarkMode(!darkMode)}} />
@@ -75,14 +106,40 @@ function App() {
        handleClick()
       }}
       keyDown={handleKeyDown}
-      onChange={(e) => {return setInput(e.target.value)}}
+      onChange={handleInputChange}
       value={input}
       className="search-inp" url={search} />
+      {suggestions.length > 0 && (
+  <div className="suggestion-box">
+    {suggestions.map((name, idx) => (
+      <div
+        key={idx}
+        className="suggestion-item"
+        onClick={() => {
+          setInput(name);
+          Setsuggestions([]);
+        }}
+      >
+        {name}
+      </div>
+    ))}
+  </div>
+)}
       <FilterBtn 
       onClick={() => {setShow(!show)}}
       clased={`hide-card ${show ? `active` : ''}`}
-      className="filter-btn" />
-      <Countries className="countries-box" />
+      className="filter-btn" >
+      {(regionName() || []).map((item,index)  => (
+        <span key={index}>
+          <button
+          onClick={() => {filterByContinent(item)}}
+          type="button">
+            {item}
+          </button>
+        </span>
+      ))}
+      </FilterBtn>
+      <Countries className= "countries-box" />
     </div>
   )
 }

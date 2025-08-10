@@ -44,30 +44,20 @@ export const CountryInfo = () => {
     loadData()
   } , [])
 
-  console.log(borders)
-
   function countries () {
   if(!data) return [];
   return data.filter(country => country.name.common.toLowerCase() === name?.toLocaleLowerCase())
   }
 
-  // function borderCountries() {
-  //   if(!borders) return [];
-  //   const res =  borders.find(border => border.name.common.toLocaleLowerCase() === name)
-  //  if(!res) return [];
-  //  return res.borders.slice(0,3)
-  // }
-
 function borderCountries () {
     if(!borders) return [];
 
     const country = borders.find(
-        (c) => c.name.common.toLowerCase() === name?.toLocaleLowerCase()
+    (c) => c.name.common.toLowerCase() === name?.toLocaleLowerCase()
     );
     if(!country || !country.borders) return [];
     
     const borderNames = country.borders.map((borderCode: any) => {
-      console.log(borderCode)
         const borderCountry = borders.find((c) => c.cca3 === borderCode)
         return borderCountry ? borderCountry.name.common : borderCode
     })
@@ -76,8 +66,22 @@ function borderCountries () {
 }
 
  const borderedCountries = borderCountries()
- console.log(borderedCountries)
- 
+  
+  function handleClickContryInfo (countryName: any) {
+    navigate(`/country?name=${countryName}`)
+  }
+
+  function NumberDisplay( number: number | bigint ) {
+    const formatted = new Intl.NumberFormat('en-US').format(number);
+    return formatted
+  }
+
+  function filterByContinents () {
+    if(!data) return [];
+    return data.filter(continent => continent.region === "Africa")
+  }
+
+console.log(filterByContinents())
   return (
     <div className={darkMode ? "dark" : "light-mode"}>
         <Header 
@@ -95,7 +99,7 @@ function borderCountries () {
                url={item.flags.svg}
                alt={item.flags.alt}
                country={item.name.common}
-               population={item.population}
+               population={NumberDisplay(item.population)}
                region={item.region}
                capital={item.capital}
                nativeName={
@@ -118,7 +122,7 @@ function borderCountries () {
                />
                <div className="footer">
                  {borderedCountries.map((item: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined,index: Key | null | undefined) => (
-                  <button key={index}>{item}</button>
+                  <button onClick={() => {handleClickContryInfo(item)}} key={index}>{item}</button>
                  ))}
                </div>
             </div>
