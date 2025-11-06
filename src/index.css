@@ -476,4 +476,7 @@ letter-spacing: 0px;
   .countries-box div {
     width: 290px;
   }
+  .sec-info-page img {
+    width: 50%;
+  }
 }
