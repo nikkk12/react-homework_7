@@ -446,17 +446,34 @@ letter-spacing: 0px;
 
 .suggestion-box {
   margin-left: 60px;
-  margin-top: 10px;
+  margin-top: 0px;
+  height: 205px;
+  overflow-y: auto;
 }
 
 .suggestion-item {
-  border: 1px solid rgb(225, 220, 220);
+  border-bottom: 1px solid rgb(225, 220, 220);
   width: 150px;
   padding-left: 10px;
   border-radius: 4px;
   cursor: pointer;
+  color: rgb(53, 22, 22);
 }
 
 .wrapper .suggestion-item {
   color: #FFFFFF;
+}
+
+@media (min-width: 756px) and (max-width: 1950px)  {
+  .countries-box {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .wrapper {
+    height: 100%;
+  }
+  .countries-box div {
+    width: 290px;
+  }
 }

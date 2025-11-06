@@ -36,7 +36,7 @@ function App() {
   }
 
  function handleClick () {
-
+  
     const value = input.trim().toLocaleLowerCase()
     const names = countryName()
 
